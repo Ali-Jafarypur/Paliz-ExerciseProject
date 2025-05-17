@@ -1,0 +1,119 @@
+﻿@using BlazorApp1
+<MudStack Row="true">
+    <MudTextField @bind-Value="productName" Label="Product Name" Variant="Variant.Outlined" Margin="Margin.Dense" />
+    <MudTextField @bind-Value="productClass" Label="Product Class" Variant="Variant.Outlined" Margin="Margin.Dense" />
+    <MudTextField @bind-Value="productBrand" Label="Product Brand" Variant="Variant.Outlined" Margin="Margin.Dense" />
+    <MudTextField @bind-Value="suplierName" Label="Suplier Name" Variant="Variant.Outlined" Margin="Margin.Dense" />
+    <MudTextField @bind-Value="productCount" Label="Product Count" Variant="Variant.Outlined" Margin="Margin.Dense" />
+    <MudTextField @bind-Value="productPrice" Label="Product Price" Variant="Variant.Outlined" Margin="Margin.Dense" />
+</MudStack>
+<MudStack Row="true">
+    <MudTextField @bind-Value="inputId" Label="Id" Variant="Variant.Outlined" Margin="Margin.Dense" />
+    <MudTextField @bind-Value="inputName" Label="New Name" Variant="Variant.Outlined" Margin="Margin.Dense" />
+</MudStack>
+
+<MudButton Variant="Variant.Outlined" OnClick="ShowProducts">Show Poducts</MudButton>
+<MudButton Variant="Variant.Outlined" OnClick="AddProduct">Add Poduct 1</MudButton>
+<MudButton Variant="Variant.Outlined" OnClick="@((e) => GetProduct(inputId))">Get Poduct</MudButton>
+<MudButton Variant="Variant.Outlined" OnClick="GetAllProducts">Get All Poducts</MudButton>
+<MudButton Variant="Variant.Outlined" OnClick="@((e) => EditProductName(inputId, inputName))">Edit Product Name</MudButton>
+<MudButton Variant="Variant.Outlined" OnClick="@((e) => DeleteProduct(inputId))">Delete Poduct</MudButton>
+
+
+
+@code {
+    public string productName = string.Empty;
+    public string productClass = string.Empty;
+    public string productBrand = string.Empty;
+    public string suplierName = string.Empty;
+    public uint productCount = 0;
+    public uint productPrice = 10000;
+
+    public string inputId = "1";
+    public string inputName = "DefaultName";
+    public Models.Product returnedProduct;
+    public List<Models.Product> returnedProductsList;
+
+    public void AddProduct()
+    {
+        using (var context = new Data.ShopContext())
+        {
+            //creates db if not exists
+            // context.Database.EnsureCreated();
+
+            //create entity objects
+            // var grd1 = new Grade() { GradeName = "1st Grade" };
+            // var std1 = new Student() { FirstName = "Yash", LastName = "Malhotra", Grade = grd1 };
+            var productAdd = new Models.Product() { ProductName = productName, ClassName = productClass, BrandName = productBrand, SuplierName = suplierName, ProductCount = productCount, ProductPrice = productPrice };
+
+            //add entitiy to the context
+            // context.Students.Add(std1);
+            context.Products.Add(productAdd);
+
+            //save data to the database tables
+            context.SaveChanges();
+
+            Console.WriteLine("Product Added");
+            //retrieve all the students from the database
+            // foreach (var s in context.Products)
+            // {
+            //     Console.WriteLine($"Product Name: {s.ProductName}, Product Price: {s.ProductPrice}");
+            // }
+        }
+    }
+
+    public void ShowProducts()
+    {
+        using (var context = new Data.ShopContext())
+        {
+            //retrieve all the students from the database
+            foreach (var s in context.Products)
+            {
+                Console.WriteLine($"Id: {s.Id},Product Name: {s.ProductName}, Product Price: {s.ProductPrice}");
+            }
+        }
+    }
+
+    public void GetProduct(string id)
+    {
+        using (var context = new Data.ShopContext())
+        {
+            var product = context.Products.FirstOrDefault(p => p.Id.ToString() == id);
+            Console.WriteLine($"Get Product -> Id: {product.Id},Product Name: {product.ProductName}, Product Price: {product.ProductPrice}");
+            returnedProduct = product;
+        }
+    }
+
+    public void GetAllProducts()
+    {
+        using (var context = new Data.ShopContext())
+        {
+            //retrieve all the students from the database
+            Console.WriteLine($"Get All Products");
+            returnedProductsList = context.Products.ToList();
+        }
+    }
+
+    public void EditProductName(string id, string newName)
+    {
+        using (var context = new Data.ShopContext())
+        {
+            var product = context.Products.FirstOrDefault(p => p.Id.ToString() == id);
+            string PName = product.ProductName;
+            product.ProductName = newName;
+            Console.WriteLine($"Change Product Name -> Id: {product.Id},Product New Name: {product.ProductName}, Product Previous Name: {PName}");
+            context.SaveChanges();
+        }
+    }
+
+    public void DeleteProduct(string id)
+    {
+        using (var context = new Data.ShopContext())
+        {
+            var product = context.Products.FirstOrDefault(p => p.Id.ToString() == id);
+            Console.WriteLine($"Delete Product -> Id: {product.Id},Product Name: {product.ProductName}, Product Price: {product.ProductPrice}");
+            context.Products.Remove(product);
+            context.SaveChanges();
+        }
+    }
+}

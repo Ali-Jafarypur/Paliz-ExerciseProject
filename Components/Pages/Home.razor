@@ -1,0 +1,348 @@
+﻿@page "/"
+@inject IDialogService DialogService
+@* @rendermode InteractiveServer *@
+
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+@inject NavigationManager Navigation
+
+@inject ILogger<Home> logger
+
+@inject HttpClient Http
+@* @inject Services.FileService fileService *@
+
+
+<PageTitle>Home</PageTitle>
+
+@* <h1>Hello, world!</h1>
+
+<BlazorApp1.Components.Pages.Components.TestComponent />
+
+Welcome to your new app. *@
+
+<style type="text/css">
+	.mud-table-head .header-centered th {
+		text-align: center;
+		font-size: 1.2em;
+	}
+
+	.mud-table-foot .bold-text .mud-table-cell {
+		font-weight: 500;
+	}
+</style>
+
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+
+	<BlazorApp1.Components.Pages.Components.Tabs2 />    <br />
+
+	<MudPaper Elevation="4" Class="pa-4">
+		<MudStack Row="true">
+			<MudTextField @bind-Value="TextValue" Label="نام" Variant="Variant.Outlined"></MudTextField>
+			<MudSelect @bind-Value="_selectedState" Label="گروه" FullWidth="_fullWidth" FitContent="_fitContent" Variant="Variant.Outlined" ShrinkLabel>
+				@foreach (var state in _states)
+				{
+					<MudSelectItem Value="@state">@state</MudSelectItem>
+				}
+			</MudSelect>
+		</MudStack>
+		<br />
+		<MudStack Justify="Justify.FlexEnd" Row="true">
+			<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Search" Color="Color.Info">جست و جو</MudButton>
+			<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.List">نمایش همه</MudButton>
+		</MudStack>
+	</MudPaper>
+
+	<br />
+
+	<MudStack Justify="Justify.SpaceBetween" Row="true">
+		<MudButton Variant="Variant.Filled" OnClick="OpenDialogAsync" StartIcon="@Icons.Material.Filled.Add">افزودن</MudButton>
+		<BlazorApp1.Components.Pages.Components.Linq homeElements="@Elements" />
+		<MudButton Variant="Variant.Filled" OnClick="ShowProductsApi">ControllerCall</MudButton>
+		<MudIconButton Icon="@Icons.Custom.FileFormats.FileExcel" Size="Size.Large" Color="Color.Success" Style="margin-inline-end:120px" aria-label="github" />
+	</MudStack>
+
+	<br />
+
+	<MudChip T="string">@_returnValue</MudChip>
+
+	<br />
+
+
+	<MudTable Items="@Elements" MultiSelection="true" @bind-SelectedItems="selectedItems" Hover="true" Breakpoint="Breakpoint.Sm" Striped="true" Bordered="true"
+			  CustomHeader="true" CustomFooter="true" HeaderClass="table-head-bordered" FooterClass="table-foot-bordered">
+
+		<ToolBarContent>
+			<MudText Typo="Typo.h6">جدول محصولات</MudText>
+			<MudSpacer />
+			<MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+		</ToolBarContent>
+		<HeaderContent>
+			@* <MudTHeadRow IgnoreCheckbox="true" Class="header-centered"> 
+                <MudTh colspan="6">Periodic Elements Info</MudTh> 
+            </MudTHeadRow>  *@
+			@* <MudTHeadRow Class="header-centered">
+                <MudTh colspan="2">Basic</MudTh> 
+                <MudTh colspan="3">Extended</MudTh> 
+            </MudTHeadRow>  *@
+			<MudTHeadRow Checkable="true">
+				<MudTh>نام کالا</MudTh>
+				<MudTh>نام دسته بندی</MudTh>
+				<MudTh>نام برند</MudTh>
+				<MudTh>تأمین کننده</MudTh>
+				<MudTh>موجودی</MudTh>
+				<MudTh>قیمت</MudTh>
+				<MudTh>دانلود فایل ها</MudTh>
+				@* <MudTh>Position</MudTh>  
+                <MudTh>Molar mass</MudTh>   *@
+			</MudTHeadRow>
+		</HeaderContent>
+		<RowTemplate>
+			<MudTd DataLabel="نام کالا">@context.ProductName</MudTd>
+			<MudTd DataLabel="نام دسته بندی">@context.ClassName</MudTd>
+			<MudTd DataLabel="نام برند">@context.BrandName</MudTd>
+			<MudTd DataLabel="تأمین کننده">@context.SuplierName</MudTd>
+			<MudTd DataLabel="موجودی">@context.ProductCount</MudTd>
+			<MudTd DataLabel="قیمت">@context.ProductPrice</MudTd>
+			<MudTd DataLabel=" دانلود فایل ها">
+				<MudButton id="downloadBTN" OnClick="@((e) => DownloadFileFromURL(context.ProductName))" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Download" Color="Color.Info">دانلود</MudButton>
+			</MudTd>
+			@* <MudTd DataLabel="Position">@context.Position</MudTd>  *@
+			@* <MudTd DataLabel="Molar mass">@context.Molar</MudTd>  *@
+		</RowTemplate>
+		<FooterContent>
+			@* <MudTFootRow Class="bold-text"> 
+                <MudTd>نام کالا</MudTd> 
+                <MudTd>نام دسته بندی</MudTd> 
+                <MudTd>نام برند</MudTd>
+                <MudTd>تأمین کننده</MudTd>
+                <MudTd>موجودی</MudTd>
+                <MudTd>قیمت</MudTd> *@
+			@* <MudTd>Position</MudTd> 
+                <MudTd>Molar mass</MudTd>  *@
+			@* </MudTFootRow> *@ 
+			<MudTFootRow Checkable="true">
+				<MudTd colspan="5">Selected: @selectedItems.Count</MudTd>
+			</MudTFootRow>
+		</FooterContent>
+		<PagerContent>
+			<MudTablePager />
+		</PagerContent>
+	</MudTable>
+
+	<br />
+
+	@* <button @onclick=MyFunc></button> *@
+	<MudButton Variant="Variant.Filled" OnClick="MyFunc">Click</MudButton>
+	<MudButton Variant="Variant.Filled" OnClick="AddTableElement">Click 2</MudButton>
+
+	@foreach (var x in k)
+	{
+		<p>@x</p>
+	}
+
+	<MudButton Color="Color.Info" Variant="Variant.Filled" OnClick="FetchProducts">Fetch Products</MudButton>
+
+	<BlazorApp1.Components.Pages.Components.EF1 />
+
+	@if (products != null)
+	{
+		<ul>
+			@foreach (var product in products)
+			{
+				<li>
+					Name : @product.ProductName - Price : @product.ProductPrice -
+					Class : @product.ClassName - Brand : @product.BrandName -
+					SuplierName : @product.SuplierName - Count : @product.ProductCount
+				</li>
+			}
+		</ul>
+	}
+	else if (isLoading)
+	{
+		<p>Loading...</p>
+	}
+	else if (errorMessage != null)
+	{
+		<p>Error: @errorMessage</p>
+	}
+
+	<br /><br /><br /><br /><br />
+
+
+</MudContainer>
+
+
+
+
+
+@code {
+	// [Inject]
+	// public ILogger<Home> logger{ get; set; }
+
+	public List<string> k { get; set; } = new List<string>();
+
+	public string TextValue { get; set; } = "";
+	private bool _fullWidth = false;
+	private bool _fitContent = false;
+	private string _selectedState = "گزینه 1";
+	private readonly string[] _states =
+					[
+		"گزینه 1", "گزینه 2", "گزینه 3"
+	];
+
+	private string searchString1 = "";
+
+
+	private HashSet<Models.Product> selectedItems = new HashSet<Models.Product>();
+	
+	private IEnumerable<Models.Product> Elements = [
+		new() {ProductName="p1", ClassName="C1", BrandName="B1", SuplierName="S1", ProductCount=1, ProductPrice=10000},
+		new() {ProductName="p2", ClassName="C2", BrandName="B2", SuplierName="S2", ProductCount=2, ProductPrice=20000},
+		new() {ProductName="p3", ClassName="C2", BrandName="B3", SuplierName="S3", ProductCount=3, ProductPrice=30000},
+		new() {ProductName="p4", ClassName="C3", BrandName="B4", SuplierName="S4", ProductCount=4, ProductPrice=40000},
+		new() {ProductName="p5", ClassName="C3", BrandName="B5", SuplierName="S5", ProductCount=5, ProductPrice=50000},
+		new() {ProductName="p6", ClassName="C3", BrandName="B6", SuplierName="S6", ProductCount=6, ProductPrice=60000},
+		new() {ProductName="p7", ClassName="C4", BrandName="B7", SuplierName="S7", ProductCount=7, ProductPrice=70000},
+		new() {ProductName="p8", ClassName="C4", BrandName="B8", SuplierName="S8", ProductCount=8, ProductPrice=80000},
+		new() {ProductName="p9", ClassName="C4", BrandName="B9", SuplierName="S9", ProductCount=9, ProductPrice=90000},
+		new() {ProductName="p10", ClassName="C4", BrandName="B10", SuplierName="S10", ProductCount=10, ProductPrice=100000},
+	];
+
+	// public class Response<T>
+	// {
+	// 	public T Data { get; set; }
+	// 	public int status { get; set; }
+	// 	public string message { get; set; }
+	// }
+
+	string _returnValue = "Dialog return value (not yet set)";
+	Models.Product _fromSubmit = new();
+
+	private async Task OpenDialogAsync()
+	{
+		var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+		var dialogReference = await DialogService.ShowAsync<Components.FormDialog1>("افزودن/ویرایش کالا", options);
+		_returnValue = "Waiting for dialog to conclude ...";
+		StateHasChanged();
+		var dialogResult = await dialogReference.Result;
+		if (dialogResult.Canceled)
+		{
+			_returnValue = "Dialog was canceled";
+			StateHasChanged();
+		}
+		else
+		{
+			_returnValue = "Form Submited";
+			_fromSubmit = (Models.Product)dialogResult.Data;
+			AddTableElement();
+			StateHasChanged();
+		}
+	}
+
+
+
+	public void AddTableElement()
+	{
+		Elements = Elements.Union([_fromSubmit]);
+	}
+
+	public void MyFunc()
+	{
+		k.Clear();
+		foreach (Models.Product myElement in selectedItems)
+		{
+			k.Add(myElement.ProductName);
+		}
+	}
+
+	private async Task DownloadFileFromURL(string productName)
+	{
+		string[] filesURL = [];
+
+		var directoryPath = $"wwwroot/Development/testing/unsafe_uploads/{productName}";
+		if (Directory.Exists(directoryPath))
+		{
+			filesURL = Directory.GetFiles(directoryPath);
+		}
+
+		foreach (string filePath in filesURL)
+		{
+			var newfilePath = filePath.Replace("wwwroot", "");
+			await JS.InvokeVoidAsync("triggerFileDownload", Path.GetFileName(newfilePath), newfilePath);
+		}
+	}
+
+	public void ShowProductsApi()
+	{
+		Navigation.NavigateTo($"/api/Product/ProductList", true);
+	}
+
+	private List<Models.Product> products;
+	private bool isLoading = false;
+	private string errorMessage;
+
+	private async Task FetchProducts()
+	{
+		isLoading = true;
+		errorMessage = null;
+
+		try
+		{
+			// Call the existing API endpoint for getting products
+			const string RequestUri = "http://localhost:5115/api/product/ProductList";
+			products = await Http.GetFromJsonAsync<List<Models.Product>>(RequestUri);
+			// var t = fileService.GetElements();
+			// if (t == null)
+			// {
+			// 	// show message
+			// }
+			// var z = fileService.GetElement(1);
+			// if (z.status != 200)
+			// {
+			// 	//show z.message
+			// }
+			// else
+			// {
+			// 	var element1 = z.Data;
+			// }
+			// var y = fileService.GetElement(2);
+		}
+		catch (HttpRequestException e)
+		{
+			errorMessage = $"Error fetching products: {e.Message}";
+		}
+		finally
+		{
+			isLoading = false;
+		}
+	}
+
+	private IJSObjectReference? module;
+
+	protected async override Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			module = await JS.InvokeAsync<IJSObjectReference>("import",
+				"./Components/Pages/Home.razor.js");
+
+			// await module.InvokeVoidAsync("addHandlers");
+		}
+	}
+
+	async ValueTask IAsyncDisposable.DisposeAsync()
+	{
+		if (module is not null)
+		{
+			try
+			{
+				await module.DisposeAsync();
+			}
+			catch (JSDisconnectedException)
+			{
+			}
+		}
+	}
+}

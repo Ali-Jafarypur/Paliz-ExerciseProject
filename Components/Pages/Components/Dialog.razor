@@ -1,0 +1,31 @@
+﻿
+<MudRTLProvider RightToLeft="false">
+    <MudDialog>
+        <TitleContent>
+            @dialogTitle
+        </TitleContent>
+        <DialogContent>
+            @dialogText
+        </DialogContent>
+        <DialogActions>
+            @* <MudButton OnClick="Cancel">لغو</MudButton> *@
+            <MudButton Color="Color.Primary" OnClick="Submit">باشه</MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudRTLProvider>
+
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public string dialogTitle { get; set; } = string.Empty;
+
+    [Parameter]
+    public string dialogText { get; set; } = string.Empty;
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog.Cancel();
+}

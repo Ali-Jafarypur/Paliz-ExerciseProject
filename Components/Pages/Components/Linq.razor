@@ -1,0 +1,199 @@
+﻿@inject IDialogService DialogService
+@using System.Text.Json;
+
+<MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+    <MudButton OnClick="@_buttonAction">@_buttonText</MudButton>
+    <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Style="align-self: auto;">
+        <MudMenuItem OnClick="() => SetButtonText(0)">Fisrt</MudMenuItem>
+        <MudMenuItem OnClick="() => SetButtonText(1)">Last</MudMenuItem>
+        <MudMenuItem OnClick="() => SetButtonText(2)">Max</MudMenuItem>
+        <MudMenuItem OnClick="() => SetButtonText(3)">Count</MudMenuItem>
+        <MudMenuItem OnClick="() => SetButtonText(4)">Any</MudMenuItem>
+        <MudMenuItem OnClick="() => SetButtonText(5)">OrderBy</MudMenuItem>
+        <MudMenuItem OnClick="() => SetButtonText(6)">Take</MudMenuItem>
+        <MudMenuItem OnClick="() => SetButtonText(7)">Skip</MudMenuItem>
+        <MudMenuItem OnClick="() => SetButtonText(8)">Distinct</MudMenuItem>
+        <MudMenuItem OnClick="() => SetButtonText(9)">GroupBy</MudMenuItem>
+    </MudMenu>
+</MudButtonGroup>
+
+@code {
+    [Parameter] public IEnumerable<Models.Product> homeElements { get; set; }
+
+    private string _buttonText = "LINQ (Select Action)";
+    private Action _buttonAction = StaticAction;
+
+    private void SetButtonText(int id)
+    {
+        switch (id)
+        {
+            case 0:
+                _buttonText = "First";
+                _buttonAction = FirstAction;
+                break;
+            case 1:
+                _buttonText = "Last";
+                _buttonAction = LastAction;
+                break;
+            case 2:
+                _buttonText = "Max";
+                _buttonAction = MaxAction;
+                break;
+            case 3:
+                _buttonText = "Count";
+                _buttonAction = CountAction;
+                break;
+            case 4:
+                _buttonText = "Any";
+                _buttonAction = AnyAction;
+                break;
+            case 5:
+                _buttonText = "OrderBy";
+                _buttonAction = OrderByAction;
+                break;
+            case 6:
+                _buttonText = "Take";
+                _buttonAction = TakeAction;
+                break;
+            case 7:
+                _buttonText = "Skip";
+                _buttonAction = SkipAction;
+                break;
+            case 8:
+                _buttonText = "Distinct";
+                _buttonAction = DistinctAction;
+                break;
+            case 9:
+                _buttonText = "GroupBy";
+                _buttonAction = GroupByAction;
+                break;
+        }
+    }
+
+    JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
+    string dialogTitle = string.Empty;
+    string dialogText = string.Empty;
+
+    private static void StaticAction()
+    {
+        Console.WriteLine("You Must Select an Action !");
+    }
+
+    private void FirstAction()
+    {
+        object value = homeElements.First();
+        string jsonString = JsonSerializer.Serialize(value, options);
+        dialogTitle = "First";
+        dialogText = jsonString;
+        // Console.WriteLine($"{homeElements.First().ProductName}");
+        OpenDialogAsync();
+    }
+
+    private void LastAction()
+    {
+        object value = homeElements.Last();
+        string jsonString = JsonSerializer.Serialize(value, options);
+        dialogTitle = "Last";
+        dialogText = jsonString;
+        // Console.WriteLine($"{homeElements.First().ProductName}");
+        OpenDialogAsync();
+    }
+
+    private void MaxAction()
+    {
+        // var maxProductCount = homeElements.Max(e => e.ProductCount);
+        // var maxProductCountElement = Elements.FirstOrDefault(e => e.ProductCount == maxProductCount);
+
+        object value = homeElements.Max(e => e.ProductCount);
+        // object value = homeElements.FirstOrDefault(e => e.ProductCount == maxProductCount);
+        string jsonString = JsonSerializer.Serialize(value, options);
+        dialogTitle = "Max";
+        dialogText = jsonString;
+        // Console.WriteLine($"{homeElements.First().ProductName}");
+        OpenDialogAsync();
+    }
+
+    private void CountAction()
+    {
+        object value = homeElements.Count(e => e.ProductCount > 0);
+        string jsonString = JsonSerializer.Serialize(value, options);
+        dialogTitle = "Count";
+        dialogText = jsonString;
+        // Console.WriteLine($"{homeElements.First().ProductName}");
+        OpenDialogAsync();
+    }
+
+    private void AnyAction()
+    {
+        object value = homeElements.Any(e => e.ProductCount > 0);
+        string jsonString = JsonSerializer.Serialize(value, options);
+        dialogTitle = "Any";
+        dialogText = jsonString;
+        // Console.WriteLine($"{homeElements.First().ProductName}");
+        OpenDialogAsync();
+    }
+
+    private void OrderByAction()
+    {
+        object value = homeElements.OrderBy(e => e.ProductCount);
+        string jsonString = JsonSerializer.Serialize(value, options);
+        dialogTitle = "OrderBy";
+        dialogText = jsonString;
+        // Console.WriteLine($"{homeElements.First().ProductName}");
+        OpenDialogAsync();
+    }
+
+    private void TakeAction()
+    {
+        object value = homeElements.Take(4);
+        string jsonString = JsonSerializer.Serialize(value, options);
+        dialogTitle = "Take";
+        dialogText = jsonString;
+        // Console.WriteLine($"{homeElements.First().ProductName}");
+        OpenDialogAsync();
+    }
+
+    private void SkipAction()
+    {
+        object value = homeElements.Skip(4);
+        string jsonString = JsonSerializer.Serialize(value, options);
+        dialogTitle = "Skip";
+        dialogText = jsonString;
+        // Console.WriteLine($"{homeElements.First().ProductName}");
+        OpenDialogAsync();
+    }
+
+    private void DistinctAction()
+    {
+        object value = homeElements.DistinctBy(x=>x.ClassName);
+        string jsonString = JsonSerializer.Serialize(value, options);
+        dialogTitle = "Distinct";
+        dialogText = jsonString;
+        // Console.WriteLine($"{homeElements.First().ProductName}");
+        OpenDialogAsync();
+    }
+
+    private void GroupByAction()
+    {
+        object value = homeElements.GroupBy(e => e.ClassName);
+        string jsonString = JsonSerializer.Serialize(value, options);
+        dialogTitle = "GroupBy";
+        dialogText = jsonString;
+        // Console.WriteLine($"{homeElements.First().ProductName}");
+        OpenDialogAsync();
+    }
+
+    private Task OpenDialogAsync()
+    {
+        var parameters = new DialogParameters<Components.Dialog>
+        {
+            // dialogText = dialogText;
+            { x => x.dialogTitle, dialogTitle },
+            { x => x.dialogText, dialogText }
+        };
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+
+        return DialogService.ShowAsync<Components.Dialog>("LINQ dialog", parameters, options);
+    }
+}

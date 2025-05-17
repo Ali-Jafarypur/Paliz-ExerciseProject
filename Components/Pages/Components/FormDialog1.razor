@@ -1,0 +1,303 @@
+﻿@using System.Globalization
+@using System.Reflection
+@* @using System.Text.RegularExpressions *@
+@using System.ComponentModel.DataAnnotations
+@* @using System.Net.Mime *@
+
+@using System
+@using System.IO
+@using Microsoft.AspNetCore.Hosting
+@inject ILogger<FormDialog1> Logger
+@inject IWebHostEnvironment Environment
+
+
+<MudDialog OnKeyDown="OnKeyDownAsync">
+    <DialogContent>
+        <MudForm @ref="form">
+            <MudStack>
+                <MudStack Row="true">
+                    <MudTextField T="string" @bind-Value="_formSubmit.ProductName" Label="نام کالا" Required="true" RequiredError="نام کالا را وارد کنید." Variant="Variant.Outlined"></MudTextField>
+                    <MudSelect T="string" @bind-Value="_formSubmit.ClassName" Label="نام دسته بندی" Required="true" RequiredError="دسته بندی را انتخاب کنید!" FullWidth="_fullWidth" FitContent="_fitContent" Variant="Variant.Outlined" ShrinkLabel>
+                        @foreach (var state in _states1)
+                        {
+                            <MudSelectItem Value="@state">@state</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudSelect @bind-Value="_formSubmit.BrandName" Label="نام برند" Required="true" RequiredError="برند را انتخاب کنید" FullWidth="_fullWidth" FitContent="_fitContent" Variant="Variant.Outlined" ShrinkLabel>
+                        @foreach (var state in _states2)
+                        {
+                            <MudSelectItem Value="@state">@state</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudStack>
+                <MudStack Row="true">
+                    <MudTextField T="string" @bind-Value="_formSubmit.SuplierName" Label="تأمین کننده" Required="true" RequiredError="تأمین کننده را وارد کنید" Variant="Variant.Outlined"></MudTextField>
+                    <MudNumericField T="uint" @bind-Value="_formSubmit.ProductCount" Label="موجودی" Required="true" Immediate="true" RequiredError="تعداد موجودی کالا را وارد کنید." Variant="Variant.Outlined" Min="0" Max="99"></MudNumericField>
+                    <MudNumericField T="uint" @bind-Value="_formSubmit.ProductPrice" Label="قیمت" Required="true" Immediate="true" RequiredError="قیمت کالا را ثبت کنید." Variant="Variant.Outlined" Min="10000" Max="1000000000" Step="1000000"></MudNumericField>
+                </MudStack>
+                <MudStack Row="true">
+                    <MudTextField T="string" Label="ایمیل تأمین کننده" Required="true" RequiredError="ایمیل تأمین کننده نمی تواند خالی باشد!" Variant="Variant.Outlined"
+                    Validation="@(new EmailAddressAttribute() {ErrorMessage = "ایمیل به شکل صحیح وارد نشده است!"})" />
+                    @* <MudDatePicker Label="Persian" @bind-Date="_date" Culture="@GetPersianCulture()" TitleDateFormat="dddd, dd MMMM" /> *@
+                    @* <MudTextField T="DateTime?" Format="yyyy-MM-dd" Label="تاریخ شروع نمایش (از)" InputType="InputType.Date" Placeholder="از" Variant="Variant.Outlined" /> *@
+                    @* <MudTextField T="DateTime?" Format="yyyy-MM-dd" Label="تاریخ پایان نمایش (تا)" InputType="InputType.Date" Placeholder="تا" Variant="Variant.Outlined" /> *@
+
+                    @* <MudDateRangePicker @bind-DateRange="@_dateRange" Margin="Margin.Dense" ReadOnly="@(!_editable)" Clearable="@_clearable"
+                                        PlaceholderStart="Start Date" PlaceholderEnd="End Date" Label="Range" /> *@
+                    <MudDateRangePicker Margin="Margin.Dense" ReadOnly="false" Clearable="true" PlaceholderStart="تاریخ شروع" PlaceholderEnd="تاریخ پایان" Label="محدوده تاریخ نمایش"
+                    Culture="@GetPersianCulture()" TitleDateFormat="dddd, dd MMMM" Required="true" RequiredError="تاریخ را مشخص کنید." Variant="Variant.Outlined"
+                    MinDate="_minDate" MaxDate="_maxDate" MinDays="1" MaxDays="7" HelperText="@DateHelperText" />
+                </MudStack>
+                <MudStack Justify=Justify.SpaceAround Row="true">
+                    <MudFileUpload T="IBrowserFile" Accept=".png, .jpg" @bind-Files="imgFile" Required="true" RequiredError=" تصویر کالا را بارگزاری کنید." SuppressOnChangeWhenInvalid="true" MaximumFileCount="10">
+                        <ActivatorContent>
+                            <MudButton Variant="Variant.Filled"
+                            Color="Color.Primary"
+                            StartIcon="@Icons.Material.Filled.CloudUpload">
+                                تصویر کالا
+                            </MudButton>
+                        </ActivatorContent>
+                    </MudFileUpload>
+                    <MudFileUpload T="IBrowserFile" Accept=".pdf" @bind-Files="pdfFile" Required="true" RequiredError=" کاتالوگ کالا را بارگزاری کنید." SuppressOnChangeWhenInvalid="true" MaximumFileCount="10">
+                        <ActivatorContent>
+                            <MudButton Variant="Variant.Filled"
+                            Color="Color.Primary"
+                            StartIcon="@Icons.Material.Filled.CloudUpload">
+                                کاتالوگ کالا (.pdf)
+                            </MudButton>
+                        </ActivatorContent>
+                    </MudFileUpload>
+
+                    @* <MudTextField T="string" Label="رنگ بندی محصول" InputType="InputType.Color" /> *@
+                    <MudItem xs="12" md="6" lg="4">
+                        <MudField Label="رنگ بندی محصول" Variant="Variant.Outlined">
+                            <input type="color" @bind-value="color" /><span class="ml-3">@color</span>
+                        </MudField>
+                    </MudItem>
+                </MudStack>
+
+                @if (isLoading)
+                {
+                    <p>Uploading...</p>
+                }
+                else
+                {
+                    <ul>
+                        @foreach (var file in loadedFiles)
+                        {
+                            <li>
+                                <ul>
+                                    <li>Name: @file.Name</li>
+                                    <li>Last modified: @file.LastModified.ToString()</li>
+                                    <li>Size (bytes): @file.Size</li>
+                                    <li>Content type: @file.ContentType</li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                }
+
+            </MudStack>
+
+
+        </MudForm>
+
+
+        @* <MudText>Select your favourite coffee. Hit Enter to accept or Escape to cancel.</MudText> *@
+        @* <MudSelect T="string" Label="Favorite Coffee" @bind-Value="_returnValue"> *@
+        @*     <MudSelectItem Value="@("Cappuccino")" /> *@
+        @*     <MudSelectItem Value="@("Cafe Latte")" /> *@
+        @*     <MudSelectItem Value="@("Espresso")" /> *@
+        @*     <MudSelectItem Value="@("Irish Coffee")" /> *@
+        @* </MudSelect> *@
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">لغو</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">ثبت کالا</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Inject] 
+    private IDialogService DialogService { get; set; } // for MessageBox
+    [Inject]
+    private IHostEnvironment hostEnvironment { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; }
+
+    MudForm form;
+
+    private string _returnValue = string.Empty;
+
+    private Models.Product _formSubmit = new();
+
+    private void Submit() => DialogValidaionCheck();
+
+    private void Cancel() => MudDialog.Cancel();
+
+    // public string ProductName { get; set; } = "";
+    private bool _fullWidth = false;
+    private bool _fitContent = false;
+    // private string _className = "دسته بندی 1";
+    private readonly string[] _states1 =
+            [
+        "دسته بندی 1", "دسته بندی 2", "دسته بندی 3"
+    ];
+    // private string _brandName = "برند 1";
+    private readonly string[] _states2 =
+            [
+        "برند 1", "برند 2", "برند 3"
+    ];
+
+    // private void DialogValidaionCheck() => (form.IsValid) ? MudDialog.Close(DialogResult.Ok(_formSubmit)) : form.Validation;
+    private async Task DialogValidaionCheck()
+    {
+        if(form.IsValid)
+        {
+            await UpLoadFiles();
+            MudDialog.Close(DialogResult.Ok(_formSubmit));
+        }
+        else
+        {
+            await form.Validate();
+        }
+
+    }
+
+    private async Task OnKeyDownAsync(KeyboardEventArgs args)
+    {
+        switch(args.Key) {
+            case "Enter":
+            case "NumpadEnter":
+                if (string.IsNullOrEmpty(_returnValue)) {
+                    await DialogService.ShowMessageBox(
+                        "Sorry",
+                        @"You must either fill the form and close with Enter or cancel with Escape!", 
+                        yesText:"Got it", 
+                        options: new DialogOptions() { CloseOnEscapeKey = true });
+                    return;
+                }
+                Submit();
+                break;
+        }
+    }
+
+    private DateTime _minDate = DateTime.Now.Date;
+    private DateTime _maxDate = DateTime.Now.Date.AddMonths(1);
+    private string DateHelperText => $"محدوده: {_minDate:M} تا {_maxDate:M}";
+
+    string color = "#6cf014";
+
+
+    private IBrowserFile imgFile;
+    private IBrowserFile pdfFile;
+
+    private List<IBrowserFile> loadedFiles = new();
+    private long maxFileSize = 1024 * 15;
+    private int maxAllowedFiles = 3;
+    private bool isLoading = false;
+
+    private async Task UpLoadImage()
+    {
+        var trustedImageName = Path.GetRandomFileName();
+        trustedImageName = Path.ChangeExtension(trustedImageName, ".png");
+        var folder = $"wwwroot/{Environment.EnvironmentName}/testing/unsafe_uploads/{_formSubmit.ProductName}";
+
+        if (!Directory.Exists(folder))
+            Directory.CreateDirectory(folder);
+
+        var pathImage = Path.Combine(folder, trustedImageName);
+        await using FileStream fs = new(pathImage, FileMode.Create);
+        await imgFile.OpenReadStream().CopyToAsync(fs);
+
+        loadedFiles.Add(imgFile);
+
+        Logger.LogInformation(
+                    "Unsafe Filename: {UnsafeFilename} File saved: {Filename}",
+                    imgFile.Name, trustedImageName);
+    }
+    private async Task UpLoadPDF()
+    {
+        var trustedPDFName = Path.GetRandomFileName();
+        trustedPDFName = Path.ChangeExtension(trustedPDFName, ".pdf");
+        var folder = $"wwwroot/{Environment.EnvironmentName}/testing/unsafe_uploads/{_formSubmit.ProductName}";
+
+        // var pathPDF = Path.Combine(Environment.ContentRootPath,
+        //             Environment.EnvironmentName, "testing", "unsafe_uploads",
+        //             trustedPDFName);
+
+        if (!Directory.Exists(folder))
+            Directory.CreateDirectory(folder);
+
+        var pathPDF = Path.Combine(folder, trustedPDFName);
+
+        await using FileStream fs = new(pathPDF, FileMode.Create);
+        await pdfFile.OpenReadStream().CopyToAsync(fs);
+
+        loadedFiles.Add(pdfFile);
+
+        Logger.LogInformation(
+                    "Unsafe Filename: {UnsafeFilename} File saved: {Filename}",
+                    pdfFile.Name, trustedPDFName);
+    }
+
+
+
+    private async Task UpLoadFiles()
+    {
+        isLoading = true;
+
+        loadedFiles.Clear();
+
+        await UpLoadImage();
+        await UpLoadPDF();
+
+        isLoading = false;
+    }
+    
+    // IList<IBrowserFile> files = new List<IBrowserFile>();
+    // private void UploadFile(IBrowserFile file)
+    // {
+    // //     if(file.ContentType.Equals(System.Net.Mime.))
+    // //     files.Add(file);
+    //     TODO upload the files to the server
+    // }
+
+    private DateTime? _date = new DateTime(1404, 02, 14); // 1399-11-26 in Persian calendar
+
+    public CultureInfo GetPersianCulture()
+    {
+        var culture = new CultureInfo("fa-IR");
+        DateTimeFormatInfo formatInfo = culture.DateTimeFormat;
+        formatInfo.AbbreviatedDayNames = new[] { "ی", "د", "س", "چ", "پ", "ج", "ش" };
+        formatInfo.DayNames = new[] { "یکشنبه", "دوشنبه", "سه شنبه", "چهار شنبه", "پنجشنبه", "جمعه", "شنبه" };
+        var monthNames = new[]
+        {
+            "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن",
+            "اسفند",
+            "",
+        };
+        formatInfo.AbbreviatedMonthNames =
+            formatInfo.MonthNames =
+                formatInfo.MonthGenitiveNames = formatInfo.AbbreviatedMonthGenitiveNames = monthNames;
+        formatInfo.AMDesignator = "ق.ظ";
+        formatInfo.PMDesignator = "ب.ظ";
+        formatInfo.ShortDatePattern = "yyyy/MM/dd";
+        formatInfo.LongDatePattern = "dddd, dd MMMM,yyyy";
+        formatInfo.FirstDayOfWeek = DayOfWeek.Saturday;
+        Calendar cal = new PersianCalendar();
+        FieldInfo fieldInfo = culture.GetType().GetField("calendar", BindingFlags.NonPublic | BindingFlags.Instance);
+        if (fieldInfo != null)
+            fieldInfo.SetValue(culture, cal);
+        FieldInfo info = formatInfo.GetType().GetField("calendar", BindingFlags.NonPublic | BindingFlags.Instance);
+        if (info != null)
+            info.SetValue(formatInfo, cal);
+        culture.NumberFormat.NumberDecimalSeparator = "/";
+        culture.NumberFormat.DigitSubstitution = DigitShapes.NativeNational;
+        culture.NumberFormat.NumberNegativePattern = 0;
+        return culture;
+    }
+
+}

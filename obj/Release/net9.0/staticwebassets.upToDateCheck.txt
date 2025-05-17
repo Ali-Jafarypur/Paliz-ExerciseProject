@@ -1,0 +1,95 @@
+Components\Pages\Home.razor.js
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.js
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\Components\Pages\Home.razor.js
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\app.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css
+D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map
+wwwroot\app.css
+wwwroot\Development\testing\unsafe_uploads\e\2et4c31x.pdf
+wwwroot\Development\testing\unsafe_uploads\e\zrintfln.png
+wwwroot\favicon.png
+wwwroot\lib\bootstrap\dist\css\bootstrap.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.min.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map

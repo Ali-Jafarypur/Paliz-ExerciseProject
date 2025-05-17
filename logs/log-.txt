@@ -1,0 +1,56 @@
+2025-05-12 09:30:48.929 +03:30 [INF] User profile is available. Using 'C:\Users\Ali\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-12 09:30:49.959 +03:30 [INF] Now listening on: http://localhost:5115
+2025-05-12 09:30:49.982 +03:30 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-12 09:30:51.509 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5115/ - null null
+2025-05-12 09:30:51.848 +03:30 [WRN] Failed to determine the https port for redirect.
+2025-05-12 09:30:51.854 +03:30 [INF] Executing endpoint '/ (/)'
+2025-05-12 09:30:52.249 +03:30 [INF] an Information log
+2025-05-12 09:30:52.249 +03:30 [ERR] a error log
+2025-05-12 09:30:53.018 +03:30 [INF] Executed endpoint '/ (/)'
+2025-05-12 09:30:53.064 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5115/BlazorApp1.uin0erjt0i.styles.css - null null
+2025-05-12 09:30:53.115 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5115/_framework/blazor.web.js - null null
+2025-05-12 09:30:53.115 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5115/_framework/aspnetcore-browser-refresh.js - null null
+2025-05-12 09:30:53.115 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5115/_content/MudBlazor/MudBlazor.min.css - null null
+2025-05-12 09:30:53.151 +03:30 [INF] Executing endpoint 'Blazor web static files'
+2025-05-12 09:30:53.160 +03:30 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.161 +03:30 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.170 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5115/_framework/aspnetcore-browser-refresh.js - 200 16505 application/javascript; charset=utf-8 54.165ms
+2025-05-12 09:30:53.175 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5115/_content/MudBlazor/MudBlazor.min.js - null null
+2025-05-12 09:30:53.175 +03:30 [INF] The file /_framework/blazor.web.js was not modified
+2025-05-12 09:30:53.175 +03:30 [INF] The file _content/MudBlazor/MudBlazor.min.css was not modified
+2025-05-12 09:30:53.175 +03:30 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.176 +03:30 [INF] The file _content/MudBlazor/MudBlazor.min.js was not modified
+2025-05-12 09:30:53.176 +03:30 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.176 +03:30 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.177 +03:30 [INF] Executed endpoint 'Blazor web static files'
+2025-05-12 09:30:53.177 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5115/_content/MudBlazor/MudBlazor.min.css - 304 null text/css 61.8868ms
+2025-05-12 09:30:53.177 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5115/_content/MudBlazor/MudBlazor.min.js - 304 null text/javascript 2.2279ms
+2025-05-12 09:30:53.177 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5115/_framework/blazor.web.js - 304 null text/javascript 62.6258ms
+2025-05-12 09:30:53.294 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5115/_vs/browserLink - null null
+2025-05-12 09:30:53.315 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5115/ - 200 null text/html; charset=utf-8 1827.3857ms
+2025-05-12 09:30:53.315 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5115/app.jwnca1sath.css - null null
+2025-05-12 09:30:53.316 +03:30 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.332 +03:30 [INF] Sending file. Request path: 'app.jwnca1sath.css'. Physical path: 'D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\obj\Debug\net9.0\compressed\psnyflj9j1-jwnca1sath.gz'
+2025-05-12 09:30:53.332 +03:30 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.332 +03:30 [INF] Sending file. Request path: 'BlazorApp1.uin0erjt0i.styles.css'. Physical path: 'D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\obj\Debug\net9.0\compressed\ysu4imbah3-uin0erjt0i.gz'
+2025-05-12 09:30:53.332 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5115/app.jwnca1sath.css - 200 2937 text/css 17.2272ms
+2025-05-12 09:30:53.333 +03:30 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.333 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5115/BlazorApp1.uin0erjt0i.styles.css - 200 6000 text/css 270.9147ms
+2025-05-12 09:30:53.361 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5115/_vs/browserLink - 200 null text/javascript; charset=UTF-8 73.8208ms
+2025-05-12 09:30:53.481 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5115/_blazor/initializers - null null
+2025-05-12 09:30:53.492 +03:30 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.496 +03:30 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.496 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5115/_blazor/initializers - 200 null application/json; charset=utf-8 14.5442ms
+2025-05-12 09:30:53.580 +03:30 [INF] Request starting HTTP/1.1 POST http://localhost:5115/_blazor/negotiate?negotiateVersion=1 - null 0
+2025-05-12 09:30:53.583 +03:30 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.601 +03:30 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:53.601 +03:30 [INF] Request finished HTTP/1.1 POST http://localhost:5115/_blazor/negotiate?negotiateVersion=1 - 200 316 application/json 20.7886ms
+2025-05-12 09:30:53.748 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5115/_blazor?id=XEvSXjpWHqs_IxoM9ydknQ - null null
+2025-05-12 09:30:53.749 +03:30 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:54.156 +03:30 [INF] an Information log
+2025-05-12 09:30:54.157 +03:30 [ERR] a error log
+2025-05-12 09:30:54.318 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5115/Components/Pages/Home.razor.js - null null
+2025-05-12 09:30:54.319 +03:30 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:54.321 +03:30 [INF] Sending file. Request path: 'Components/Pages/Home.razor.js'. Physical path: 'D:\Storage\Work\Paliz\Visual Studio\Projects\Source\repos\BlazorApp1\obj\Debug\net9.0\compressed\ee9ybhxfgd-z6zfmnafxl.gz'
+2025-05-12 09:30:54.321 +03:30 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2025-05-12 09:30:54.321 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5115/Components/Pages/Home.razor.js - 200 1208 text/javascript 3.0077ms
