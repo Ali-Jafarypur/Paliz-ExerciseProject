@@ -1,5 +1,8 @@
 ﻿
 using BlazorApp1.Components.Pages;
+using BlazorApp1.Models;
+using BlazorApp1.Repository;
+using BlazorApp1.Services;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Net.Http;
@@ -12,6 +15,59 @@ namespace BlazorApp1.Controllers
     [Route("api/[controller]")]
     public class ProductController : Controller
     {
+
+
+        // -----------------
+        private readonly ProductRepository _productRepository;
+
+        public ProductController(ProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
+
+        [HttpPost]
+        public IActionResult AddProduct([FromBody] Product product)
+        {
+            _productRepository.AddProduct(product);
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetProduct(int id)
+        {
+            var product = _productRepository.GetProductById(id);
+            return product != null ? Ok(product) : NotFound();
+        }
+
+        [HttpGet]
+        public IActionResult GetAllProducts()
+        {
+            var products = _productRepository.GetAllProducts();
+            return Ok(products);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateProduct(int id, [FromBody] Product product)
+        {
+            product.Id = id; // int.Parse(id); Ensure the ID is set
+            _productRepository.UpdateProduct(product);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProduct(int id)
+        {
+            var product = _productRepository.GetProductById(id);
+            if (product != null)
+            {
+                _productRepository.DeleteProduct(product);
+                return Ok();
+            }
+            return NotFound();
+        }
+
+        // -----------------
+
         private static readonly List<Models.Product> objects = new List<Models.Product>
             {
                 new() {ProductName="p1", ClassName="C1", BrandName="B1", SuplierName="S1", ProductCount=1, ProductPrice=10000},

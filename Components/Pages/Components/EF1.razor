@@ -1,4 +1,5 @@
-﻿@using BlazorApp1
+﻿@inject Services.ProductService ProductService
+
 <MudStack Row="true">
     <MudTextField @bind-Value="productName" Label="Product Name" Variant="Variant.Outlined" Margin="Margin.Dense" />
     <MudTextField @bind-Value="productClass" Label="Product Class" Variant="Variant.Outlined" Margin="Margin.Dense" />
@@ -8,12 +9,12 @@
     <MudTextField @bind-Value="productPrice" Label="Product Price" Variant="Variant.Outlined" Margin="Margin.Dense" />
 </MudStack>
 <MudStack Row="true">
-    <MudTextField @bind-Value="inputId" Label="Id" Variant="Variant.Outlined" Margin="Margin.Dense" />
+    <MudTextField T="int" @bind-Value="inputId" Label="Id" Variant="Variant.Outlined" Margin="Margin.Dense" />
     <MudTextField @bind-Value="inputName" Label="New Name" Variant="Variant.Outlined" Margin="Margin.Dense" />
 </MudStack>
 
 <MudButton Variant="Variant.Outlined" OnClick="ShowProducts">Show Poducts</MudButton>
-<MudButton Variant="Variant.Outlined" OnClick="AddProduct">Add Poduct 1</MudButton>
+<MudButton Variant="Variant.Outlined" OnClick="AddProduct">Add Poduct</MudButton>
 <MudButton Variant="Variant.Outlined" OnClick="@((e) => GetProduct(inputId))">Get Poduct</MudButton>
 <MudButton Variant="Variant.Outlined" OnClick="GetAllProducts">Get All Poducts</MudButton>
 <MudButton Variant="Variant.Outlined" OnClick="@((e) => EditProductName(inputId, inputName))">Edit Product Name</MudButton>
@@ -29,91 +30,99 @@
     public uint productCount = 0;
     public uint productPrice = 10000;
 
-    public string inputId = "1";
+    public int inputId = 1;
     public string inputName = "DefaultName";
-    public Models.Product returnedProduct;
-    public List<Models.Product> returnedProductsList;
-
-    public void AddProduct()
-    {
-        using (var context = new Data.ShopContext())
-        {
-            //creates db if not exists
-            // context.Database.EnsureCreated();
-
-            //create entity objects
-            // var grd1 = new Grade() { GradeName = "1st Grade" };
-            // var std1 = new Student() { FirstName = "Yash", LastName = "Malhotra", Grade = grd1 };
-            var productAdd = new Models.Product() { ProductName = productName, ClassName = productClass, BrandName = productBrand, SuplierName = suplierName, ProductCount = productCount, ProductPrice = productPrice };
-
-            //add entitiy to the context
-            // context.Students.Add(std1);
-            context.Products.Add(productAdd);
-
-            //save data to the database tables
-            context.SaveChanges();
-
-            Console.WriteLine("Product Added");
-            //retrieve all the students from the database
-            // foreach (var s in context.Products)
-            // {
-            //     Console.WriteLine($"Product Name: {s.ProductName}, Product Price: {s.ProductPrice}");
-            // }
-        }
-    }
+    public Models.Product? returnedProduct;
+    public List<Models.Product>? returnedProductsList;
 
     public void ShowProducts()
     {
-        using (var context = new Data.ShopContext())
+        if (returnedProductsList != null)
         {
-            //retrieve all the students from the database
-            foreach (var s in context.Products)
+            foreach (var product in returnedProductsList)
             {
-                Console.WriteLine($"Id: {s.Id},Product Name: {s.ProductName}, Product Price: {s.ProductPrice}");
+                Console.WriteLine($"Id: {product.Id}, Product Name: {product.ProductName}, Product Price: {product.ProductPrice}");
             }
         }
-    }
-
-    public void GetProduct(string id)
-    {
-        using (var context = new Data.ShopContext())
+        else
         {
-            var product = context.Products.FirstOrDefault(p => p.Id.ToString() == id);
-            Console.WriteLine($"Get Product -> Id: {product.Id},Product Name: {product.ProductName}, Product Price: {product.ProductPrice}");
-            returnedProduct = product;
+            Console.WriteLine("No product was cached. Getting All Products ...");
+            GetAllProducts();
         }
     }
 
-    public void GetAllProducts()
+    public async Task AddProduct()
     {
-        using (var context = new Data.ShopContext())
+        var productAdd = new Models.Product()
+            {
+                ProductName = productName,
+                ClassName = productClass,
+                BrandName = productBrand,
+                SuplierName = suplierName,
+                ProductCount = productCount,
+                ProductPrice = productPrice
+            };
+
+        await ProductService.AddProduct(productAdd);
+        Console.WriteLine("Product Added");
+    }
+
+    public async Task GetProduct(int id)
+    {
+        returnedProduct = await ProductService.GetProductById(id);
+        if (returnedProduct != null)
         {
-            //retrieve all the students from the database
-            Console.WriteLine($"Get All Products");
-            returnedProductsList = context.Products.ToList();
+            Console.WriteLine($"Get Product -> Id: {returnedProduct.Id}, Product Name: {returnedProduct.ProductName}, Product Price: {returnedProduct.ProductPrice}");
+        }
+        else
+        {
+            Console.WriteLine("Product not found.");
         }
     }
 
-    public void EditProductName(string id, string newName)
+    public async Task GetAllProducts()
     {
-        using (var context = new Data.ShopContext())
+        returnedProductsList = null;
+        returnedProductsList = await ProductService.GetAllProducts();
+        if (returnedProductsList != null)
         {
-            var product = context.Products.FirstOrDefault(p => p.Id.ToString() == id);
-            string PName = product.ProductName;
-            product.ProductName = newName;
-            Console.WriteLine($"Change Product Name -> Id: {product.Id},Product New Name: {product.ProductName}, Product Previous Name: {PName}");
-            context.SaveChanges();
+            Console.WriteLine("Got All Products");
+            foreach (var product in returnedProductsList)
+            {
+                Console.WriteLine($"Id: {product.Id}, Product Name: {product.ProductName}, Product Price: {product.ProductPrice}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("No Product was found.");
         }
     }
 
-    public void DeleteProduct(string id)
+    public async Task EditProductName(int id, string newName)
     {
-        using (var context = new Data.ShopContext())
+        returnedProduct = await ProductService.GetProductById(id);
+        if (returnedProduct != null)
         {
-            var product = context.Products.FirstOrDefault(p => p.Id.ToString() == id);
-            Console.WriteLine($"Delete Product -> Id: {product.Id},Product Name: {product.ProductName}, Product Price: {product.ProductPrice}");
-            context.Products.Remove(product);
-            context.SaveChanges();
+            returnedProduct.ProductName = newName;
+            await ProductService.UpdateProduct(id, returnedProduct);
+            Console.WriteLine($"Changed Product Name -> Id: {returnedProduct.Id}, New Name: {returnedProduct.ProductName}");
+        }
+        else
+        {
+            Console.WriteLine("Product not found.");
+        }
+    }
+
+    public async Task DeleteProduct(int id)
+    {
+        var response = await ProductService.DeleteProduct(id);
+        if(response.IsSuccessStatusCode)
+        {
+            Console.WriteLine($"Deleted Product with Id: {id}");
+        }
+        else
+        {
+            Console.WriteLine($"NO Product found with Id: {id} to delete");
         }
     }
 }
