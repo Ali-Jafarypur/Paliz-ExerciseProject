@@ -1,4 +1,8 @@
 using BlazorApp1.Components;
+using BlazorApp1.Controllers;
+using BlazorApp1.Data;
+using BlazorApp1.Repository;
+using BlazorApp1.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using MudBlazor.Services;
@@ -20,6 +24,10 @@ builder.Services.AddMudServices();
 // Add Serilog
 builder.Services.AddSerilog();
 
+builder.Services.AddDbContext<ShopContext>();
+builder.Services.AddScoped<ProductRepository>();
+
+
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile(path: "appsettings.json", optional: false, reloadOnChange: true)
@@ -40,6 +48,9 @@ builder.Host.UseSerilog(log);
 builder.Services.AddControllers();
 //builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
+
+// Register the ProductService
+builder.Services.AddScoped<ProductService>();
 
 var app = builder.Build();
 

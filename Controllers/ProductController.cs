@@ -15,9 +15,6 @@ namespace BlazorApp1.Controllers
     [Route("api/[controller]")]
     public class ProductController : Controller
     {
-
-
-        // -----------------
         private readonly ProductRepository _productRepository;
 
         public ProductController(ProductRepository productRepository)
@@ -44,6 +41,16 @@ namespace BlazorApp1.Controllers
         {
             var products = _productRepository.GetAllProducts();
             return Ok(products);
+            //try
+            //{
+            //    var products = _productRepository.GetAllProducts();
+            //    return Ok(products);
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex, "An error occurred while getting all products.");
+            //    return StatusCode(500, "Internal server error");
+            //}
         }
 
         [HttpPut("{id}")]

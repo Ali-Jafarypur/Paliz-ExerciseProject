@@ -10,7 +10,7 @@ namespace BlazorApp1.Services
 
         public ProductService(HttpClient httpClient)
         {
-            httpClient.BaseAddress = new Uri("http://localhost:5115");
+            //httpClient.BaseAddress = new Uri("http://localhost:5115/");
             _httpClient = httpClient;
         }
 
@@ -26,7 +26,8 @@ namespace BlazorApp1.Services
 
         public async Task<List<Product>?> GetAllProducts()
         {
-            return await _httpClient.GetFromJsonAsync<List<Product>>("api/product");
+            return await _httpClient.GetFromJsonAsync<List<Product>>("http://localhost:5115/api/product");
+            //return await _httpClient.GetFromJsonAsync<List<Product>>("api/product");
         }
 
         public async Task UpdateProduct(int id, Product product)
